@@ -6,7 +6,7 @@ import Rank from "./components/Rank/Rank";
 import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
 import Signin from "./components/Signin/Signin";
 import Register from "./components/Register/Register";
-import Particles from "react-particles-js";
+import ParticlesBg from "particles-bg";
 import Clarifai from "clarifai";
 
 import "./App.css";
@@ -14,18 +14,6 @@ import "./App.css";
 const app = new Clarifai.App({
   apiKey: "984629c5b3b14ea09614d42d0d5fe7d0",
 });
-
-const particlesOptions = {
-  particles: {
-    number: {
-      value: 80,
-      density: {
-        enable: true,
-        value_area: 800,
-      },
-    },
-  },
-};
 
 class App extends Component {
   constructor() {
@@ -85,7 +73,7 @@ class App extends Component {
     const { isSignedIn, imageUrl, route, box } = this.state;
     return (
       <div className="App">
-        <Particles className="particles" params={particlesOptions} />
+        <ParticlesBg type="cobweb" bg={true} />
         <Navigation
           isSignedIn={isSignedIn}
           onRouteChange={this.onRouteChange}
