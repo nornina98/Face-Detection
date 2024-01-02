@@ -1,7 +1,7 @@
 import React from "react";
 import Tilt from "react-parallax-tilt";
-import "./Logo.css";
 import brain from "./brain.png";
+import "./Logo.css";
 
 const Logo = () => {
   return (
@@ -20,3 +20,5 @@ const Logo = () => {
 };
 
 export default Logo;
+
+/* DO SOME FUNC*/

@@ -36,9 +36,11 @@ class App extends Component {
     console.log(width, height);
     return {
       leftCol: clarifaiFace.left_col * width,
-      topRow: clarifaiFace.left_col * height,
-      rightCol: width - clarifaiFace.right_col * width,
-      bottomRow: height - clarifaiFace.right_col * height,
+      topRow: clarifaiFace.top_row * height,
+      // prettier-ignore
+      rightCol: width - (clarifaiFace.right_col * width),
+      // prettier-ignore
+      bottomRow: height - (clarifaiFace.bottom_row * height),
     };
   };
 
@@ -53,7 +55,7 @@ class App extends Component {
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.input });
     app.models
-      .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
+      .predict("face-detection", this.state.input)
       .then((response) =>
         this.displayFaceBox(this.calculateFaceLocation(response))
       )
