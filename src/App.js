@@ -12,7 +12,7 @@ import Clarifai from "clarifai";
 import "./App.css";
 
 const app = new Clarifai.App({
-  apiKey: "984629c5b3b14ea09614d42d0d5fe7d0",
+  apiKey: "557d041d08814f80a5cd52747eba2ad4",
 });
 
 class App extends Component {
@@ -52,6 +52,7 @@ class App extends Component {
     const image = document.getElementById("inputimage");
     const width = Number(image.width);
     const height = Number(image.height);
+    console.log(width, height);
     return {
       leftCol: clarifaiFace.left_col * width,
       topRow: clarifaiFace.top_row * height,
