@@ -7,13 +7,43 @@ import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
 import Signin from "./components/Signin/Signin";
 import Register from "./components/Register/Register";
 import ParticlesBg from "particles-bg";
-import Clarifai from "clarifai";
 
 import "./App.css";
 
-const app = new Clarifai.App({
-  apiKey: "557d041d08814f80a5cd52747eba2ad4",
-});
+const returnClarifaiRequestOptions = (imageUrl) => {
+  // Your PAT (Personal Access Token) can be found in the portal under Authentification
+  const PAT = "389f7ea3d0f2431eb2e05662d65022e1";
+  const USER_ID = "nornina8971";
+  const APP_ID = "FaceDetection";
+  const IMAGE_URL = imageUrl;
+
+  const raw = JSON.stringify({
+    user_app_id: {
+      user_id: USER_ID,
+      app_id: APP_ID,
+    },
+    inputs: [
+      {
+        data: {
+          image: {
+            url: IMAGE_URL,
+          },
+        },
+      },
+    ],
+  });
+
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      Authorization: "Key " + PAT,
+    },
+    body: raw,
+  };
+
+  return requestOptions;
+};
 
 class App extends Component {
   constructor() {
@@ -52,7 +82,6 @@ class App extends Component {
     const image = document.getElementById("inputimage");
     const width = Number(image.width);
     const height = Number(image.height);
-    console.log(width, height);
     return {
       leftCol: clarifaiFace.left_col * width,
       topRow: clarifaiFace.top_row * height,
@@ -73,9 +102,13 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.input });
-
-    app.models
-      .predict("face-detection", this.state.input)
+    // app.models.predict("face-detection", this.state.input)
+    fetch(
+      // eslint-disable-next-line no-useless-concat
+      "https://api.clarifai.com/v2/models/" + "face-detection" + "/outputs",
+      returnClarifaiRequestOptions(this.state.input)
+    )
+      .then((response) => response.json())
       .then((response) => {
         console.log("hi", response);
         if (response) {
